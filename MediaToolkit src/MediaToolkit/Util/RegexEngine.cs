@@ -53,16 +53,16 @@ namespace MediaToolkit.Util
             Match matchTime = Index[Find.ConvertProgressTime].Match(data);
             Match matchBitrate = Index[Find.ConvertProgressBitrate].Match(data);
 
-            if (!matchFrame.Success || !matchFps.Success || !matchSize.Success || !matchTime.Success ||
-                !matchBitrate.Success) return false;
+            if (!matchFrame.Success || !matchFps.Success || !matchTime.Success)
+                return false;
 
             TimeSpan processedDuration;
             TimeSpan.TryParse(matchTime.Groups[1].Value, out processedDuration);
 
             long frame = Convert.ToInt64(matchFrame.Groups[1].Value);
             double fps = Convert.ToDouble(matchFps.Groups[1].Value);
-            int sizeKb = Convert.ToInt32(matchSize.Groups[1].Value);
-            double bitrate = Convert.ToDouble(matchBitrate.Groups[1].Value);
+            int sizeKb = !string.IsNullOrEmpty(matchSize.Groups[1].Value) ? Convert.ToInt32(matchSize.Groups[1].Value) : 0;
+            double bitrate = !string.IsNullOrEmpty(matchBitrate.Groups[1].Value) ? Convert.ToDouble(matchBitrate.Groups[1].Value) : 0;
 
             progressEventArgs = new ConvertProgressEventArgs(processedDuration, TimeSpan.Zero, frame, fps, sizeKb, bitrate);
 
