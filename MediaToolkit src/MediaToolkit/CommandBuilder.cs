@@ -87,7 +87,7 @@ namespace MediaToolkit
             // Video size / resolution
             if (conversionOptions.VideoSize == VideoSize.Custom)
             {
-                commandBuilder.AppendFormat(" -vf \"scale={0}:{1}\" ", conversionOptions.CustomWidth ?? -2, conversionOptions.CustomHeight ?? -2);
+                commandBuilder.AppendFormat(" -s {0}x{1} ", conversionOptions.CustomWidth ?? -2, conversionOptions.CustomHeight ?? -2);
             }
             else if (conversionOptions.VideoSize != VideoSize.Default)
             {
